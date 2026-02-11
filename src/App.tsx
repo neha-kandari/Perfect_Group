@@ -161,7 +161,7 @@ Please get back to me.`;
             </button>
             <div className="mb-4 text-center">
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-                Need Help?
+                Perfect Group
               </h2>
               <p className="text-gray-600 text-sm sm:text-base">
                 Have questions about our products or need a custom packaging solution? Get in touch with our team.
