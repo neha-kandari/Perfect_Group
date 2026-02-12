@@ -189,7 +189,7 @@ const Navbar = () => {
               {/* Contact Us Button */}
               <div className="p-6 border-t border-gray-200">
                 <a
-                  href="https://wa.me/919999703392"
+                  href="https://wa.me/918882473038"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block"
