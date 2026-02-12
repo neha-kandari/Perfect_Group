@@ -49,6 +49,7 @@ const Contact = () => {
 
     const formData = new FormData(event.currentTarget);
     const name = (formData.get('name') || '').toString().trim();
+    const company = (formData.get('company') || '').toString().trim();
     const phoneValue = (formData.get('phone') || '').toString().trim();
     const message = (formData.get('message') || '').toString().trim();
 
@@ -62,6 +63,7 @@ const Contact = () => {
       'Hello! I would like to know more about your products.',
       '',
       name ? `Name: ${name}` : '',
+      company ? `Company: ${company}` : '',
       `Phone: ${phoneValue}`,
       message ? `Message: ${message}` : '',
       '',
@@ -114,7 +116,7 @@ const Contact = () => {
               </div>
               <h3 className="text-lg font-bold text-gray-800 mb-3">Phone Number</h3>
               <p className="text-gray-600 text-sm font-medium">+91-11-47093392</p>
-              <p className="text-gray-600 text-sm font-medium mt-2">+91-8882473038</p>
+              <p className="text-gray-600 text-sm font-medium mt-2">+91-9999703392</p>
             </div>
 
             {/* Email Card */}
@@ -184,9 +186,9 @@ const Contact = () => {
               
               {/* Form Section */}
               <div className="p-8 sm:p-12 lg:p-16">
-                <h2 className="text-3xl font-bold text-gray-800 mb-2 font-sans">Send us a <span className="text-[#E88D14]">Message</span></h2>
+                <h2 className="text-3xl font-bold text-gray-800 mb-2 font-sans"> <span className="text-[#E88D14]">Perfect Group</span></h2>
                 <p className="text-gray-600 mb-8 text-sm">
-                  We'd love to hear from you. Please fill out the form below.
+                  Send us your message, we'd love to hear from you. Please fill out the form below.
                 </p>
                 
                 <form className="space-y-4" onSubmit={handleSubmit}>
@@ -194,6 +196,12 @@ const Contact = () => {
                     type="text" 
                     name="name"
                     placeholder="Name *" 
+                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-[#E88D14] focus:ring-1 focus:ring-[#E88D14] outline-none transition-colors bg-gray-50 text-gray-700 placeholder-gray-400 text-sm"
+                  />
+                  <input 
+                    type="text" 
+                    name="company"
+                    placeholder="Company Name *" 
                     className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-[#E88D14] focus:ring-1 focus:ring-[#E88D14] outline-none transition-colors bg-gray-50 text-gray-700 placeholder-gray-400 text-sm"
                   />
                   <input 
