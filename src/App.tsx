@@ -1,4 +1,4 @@
-import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
+import { useEffect, useState, useRef, type ChangeEvent, type FormEvent } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import Products from './pages/Products';
@@ -10,6 +10,8 @@ const WHATSAPP_URL = 'https://wa.me/918882473038';
 const AppRoutes = () => {
   const location = useLocation();
   const [showPopup, setShowPopup] = useState(false);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  
   const [formData, setFormData] = useState({
     name: '',
     company: '',
@@ -90,21 +92,37 @@ const AppRoutes = () => {
     }
   };
 
+  const startPopupTimer = () => {
+    // Clear any existing timer
+    if (timerRef.current) {
+      window.clearTimeout(timerRef.current);
+    }
+
+    // Set popup to appear after 30 seconds
+    timerRef.current = window.setTimeout(() => {
+      setShowPopup(true);
+    }, 30000);
+  };
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
+    // Don't show popup on contact page
     if (location.pathname === '/contact') {
       setShowPopup(false);
+      if (timerRef.current) {
+        window.clearTimeout(timerRef.current);
+      }
       return;
     }
 
-    const timer = window.setTimeout(() => {
-      setShowPopup(true);
-    }, 30000);
+    // Start timer when entering non-contact pages
+    startPopupTimer();
 
     return () => {
-      window.clearTimeout(timer);
-      setShowPopup(false);
+      if (timerRef.current) {
+        window.clearTimeout(timerRef.current);
+      }
     };
   }, [location.pathname]);
 
@@ -156,13 +174,13 @@ Please get back to me.`;
       phone: '',
     });
 
-    setTimeout(() => {
-      handleClose();
-    }, 2000);
+    handleClose();
   };
 
   const handleClose = () => {
     setShowPopup(false);
+    // Restart timer after closing popup
+    startPopupTimer();
   };
 
   return (
