@@ -10,7 +10,7 @@ const WHATSAPP_URL = 'https://wa.me/918882473038';
 const AppRoutes = () => {
   const location = useLocation();
   const [showPopup, setShowPopup] = useState(false);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   
   const [formData, setFormData] = useState({
     name: '',
@@ -109,10 +109,11 @@ const AppRoutes = () => {
 
     // Don't show popup on contact page
     if (location.pathname === '/contact') {
-      setShowPopup(false);
       if (timerRef.current) {
         window.clearTimeout(timerRef.current);
+        timerRef.current = null;
       }
+      setShowPopup(false);
       return;
     }
 
