@@ -12,17 +12,26 @@ const AppRoutes = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
+    company: '',
     phone: '',
     message: '',
   });
   const [validationErrors, setValidationErrors] = useState({
     name: '',
+    company: '',
     phone: '',
   });
 
   const validateName = (value: string) => {
     if (value.length > 20) {
       return 'Name must be 20 characters or less';
+    }
+    return '';
+  };
+
+  const validateCompany = (value: string) => {
+    if (value.length > 30) {
+      return 'Company name must be 30 characters or less';
     }
     return '';
   };
@@ -44,6 +53,12 @@ const AppRoutes = () => {
         ...prev,
         name: error,
       }));
+    } else if (name === 'company') {
+      const error = validateCompany(value);
+      setValidationErrors(prev => ({
+        ...prev,
+        company: error,
+      }));
     } else if (name === 'phone') {
       const error = validatePhone(value);
       setValidationErrors(prev => ({
@@ -56,6 +71,11 @@ const AppRoutes = () => {
       setFormData(prev => ({
         ...prev,
         name: value.slice(0, 50),
+      }));
+    } else if (name === 'company') {
+      setFormData(prev => ({
+        ...prev,
+        company: value.slice(0, 50),
       }));
     } else if (name === 'phone') {
       setFormData(prev => ({
@@ -96,20 +116,23 @@ const AppRoutes = () => {
     event.preventDefault();
 
     const nameError = validateName(formData.name);
+    const companyError = validateCompany(formData.company);
     const phoneError = validatePhone(formData.phone);
 
     setValidationErrors({
       name: nameError,
+      company: companyError,
       phone: phoneError,
     });
 
-    if (nameError || phoneError) {
+    if (nameError || companyError || phoneError) {
       return;
     }
 
     const message = `Hello! I would like to know more about your products.
 
 Name: ${formData.name}
+Company: ${formData.company}
 Phone: ${formData.phone}
 Message: ${formData.message}
 
@@ -122,12 +145,14 @@ Please get back to me.`;
 
     setFormData({
       name: '',
+      company: '',
       phone: '',
       message: '',
     });
 
     setValidationErrors({
       name: '',
+      company: '',
       phone: '',
     });
 
@@ -182,6 +207,23 @@ Please get back to me.`;
                 {validationErrors.name && (
                   <p className="mt-1 text-xs text-red-500">
                     {validationErrors.name}
+                  </p>
+                )}
+              </div>
+              <div>
+                <input
+                  type="text"
+                  name="company"
+                  placeholder="Company Name"
+                  className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-[#f89a24] focus:ring-1 focus:ring-[#f89a24] outline-none text-sm"
+                  value={formData.company}
+                  onChange={handleInputChange}
+                  maxLength={50}
+                  required
+                />
+                {validationErrors.company && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {validationErrors.company}
                   </p>
                 )}
               </div>
